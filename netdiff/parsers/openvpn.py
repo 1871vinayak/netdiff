@@ -14,10 +14,13 @@ class OpenvpnParser(BaseParser):
     _server_common_name = 'openvpn-server'
 
     def to_python(self, data):
+        if not data:
+            return None
         try:
             return parse_status(data)
-        except (AttributeError, ParsingError):
-            return None
+        except (AttributeError, ParsingError) as e:
+            msg = 'something went wront: {0}'.format(str(e))
+            print(msg)
 
     def parse(self, data):
         """
